@@ -1,0 +1,101 @@
+# =========================
+
+# ML4SCI Task 2d Config
+
+# =========================
+
+# -------------------------
+
+# Dataset Configuration
+
+# -------------------------
+
+data:
+file_path: "/content/drive/MyDrive/ML4SCI_datasets/Dataset_Specific_labelled.h5"
+subset_size: 20000        # Use subset for faster experimentation
+batch_size: 32
+num_workers: 0
+pin_memory: true
+
+# -------------------------
+
+# Model Configuration
+
+# -------------------------
+
+model:
+name: "SparseResNet"      # Options: SparseResNet, DenseCNN
+input_channels: 8
+hidden_dims: [16, 32, 64]
+output_dim: 1
+
+# -------------------------
+
+# Training Configuration
+
+# -------------------------
+
+training:
+epochs: 10
+learning_rate: 0.001
+weight_decay: 0.0001
+
+scheduler:
+type: "StepLR"
+step_size: 5
+gamma: 0.5
+
+loss: "BCEWithLogitsLoss"
+optimizer: "Adam"
+
+# -------------------------
+
+# Pruning Configuration
+
+# -------------------------
+
+pruning:
+method: "global_unstructured"
+ratios: [0.0, 0.2, 0.4, 0.6, 0.8]
+finetune_epochs: 2
+
+# -------------------------
+
+# Evaluation Configuration
+
+# -------------------------
+
+evaluation:
+metrics: ["accuracy", "auc"]
+threshold: 0.5
+
+# -------------------------
+
+# FLOPS Configuration
+
+# -------------------------
+
+flops:
+use_effective_flops: true
+input_shape: [8, 125, 125]
+
+# -------------------------
+
+# Logging / Output
+
+# -------------------------
+
+logging:
+save_plots: true
+save_tables: true
+output_dir: "results"
+plot_dir: "results/plots"
+table_dir: "results/tables"
+
+# -------------------------
+
+# Reproducibility
+
+# -------------------------
+
+seed: 42
